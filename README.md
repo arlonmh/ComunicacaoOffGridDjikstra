@@ -1,61 +1,89 @@
+# Comunicação Off-Grid com Dijkstra
 
-***COMUNICAÇÃO OFF-GRID COM DIJKSTRA (C)*** \
-DESCRIÇÃO GERAL
+Este projeto foi desenvolvido em C com o objetivo de demonstrar uma aplicação simples do algoritmo de Dijkstra.
 
-* Este projeto implementa o algoritmo de Dijkstra em linguagem C
-para calcular o menor caminho (menor custo) em um grafo
-ponderado.
+A ideia principal não é criar um sistema real de comunicação, mas usar uma rede fictícia de antenas para mostrar, de forma prática, como o algoritmo pode encontrar o menor caminho dentro de um grafo.
 
-O grafo representa uma rede de comunicação OFF-Grid, onde:
-* Cada vértice representa uma antena.
-* Cada aresta representa uma conexão entre antenas.
-* O peso da aresta indica a distância ou custo da comunicação
+## Sobre o projeto
 
-Os dados do grafo são lidos a partir do arquivo "antenas.txt",
-que deve estar localizado na mesma pasta do executável.
+No programa, cada antena é representada como um vértice do grafo.
 
-ARQUIVOS DO PROJETO
-* main.c
-Arquivo principal contendo a implementação do algoritmo de
-Dijkstra e toda a lógica do programa.
+As conexões entre as antenas representam as arestas, e cada conexão possui uma distância associada.
 
-* antenas.txt
-Arquivo de entrada contendo os dados do grafo (antenas,
-conexões e pesos).
+Dessa forma, podemos imaginar que uma mensagem precisa sair de uma antena e chegar até outra, podendo passar por várias antenas intermediárias.
 
-COMO EXECUTAR NO LINUX (Ubuntu, Debian, Zorin, etc.)
+O objetivo é encontrar a rota com a menor distância total.
 
-* Clone o repositório: git clone https://github.com/arlonmh/Comunica-o-OFF-Grid-com-Djikstra.git
-* Entre na pasta do projeto: cd Comunica-o-OFF-Grid-com-Djikstra
-* Compile o programa: gcc main.c -o main
-* Execute o programa: ./main
+É nesse ponto que o algoritmo de Dijkstra é utilizado.
 
-OBSERVAÇÃO:
-O arquivo "antenas.txt" deve permanecer na mesma pasta do
-executável durante a execução.
+## Como o Dijkstra é aplicado
 
-COMO EXECUTAR NO WINDOWS
-OPÇÃO 1 - MSYS2 (RECOMENDADO)
-* Instale o MSYS2: https://www.msys2.org/
-* Abra o terminal "MSYS2 UCRT64" ou "MINGW64".
-* Instale o compilador GCC: pacman -S --needed mingw-w64-ucrt-x86_64-gcc
-* Clone o repositório: git clone https://github.com/arlonmh/Comunica-o-OFF-Grid-com-Djikstra.git
-* Entre na pasta do projeto: cd Comunica-o-OFF-Grid-com-Djikstra
-* Compile o programa: gcc main.c -o main.exe
-* Execute: ./main.exe
+O algoritmo parte de uma antena de origem e calcula a menor distância possível até as outras antenas da rede.
 
-OPÇÃO 2 - MinGW-w64
-* Instale o MinGW-w64 ou w64devkit e garanta que o GCC esteja
-configurado corretamente no PATH do sistema.
-* Abra o Prompt de Comando ou PowerShell.
-* Navegue até a pasta do projeto (onde estão main.c e antenas.txt).
-* Compile o programa: gcc main.c -o main.exe
-* Execute: main.exe
+Durante o processo, ele compara os caminhos disponíveis e mantém sempre a menor distância encontrada.
 
-OBSERVAÇÕES IMPORTANTES
+No final, o programa consegue mostrar qual sequência de antenas deve ser utilizada para chegar ao destino com o menor custo.
 
-O arquivo "antenas.txt" deve estar sempre na mesma pasta do
-executável.
+Neste projeto, esse custo é representado pela distância entre as antenas.
 
-O programa utiliza caminho relativo para leitura do arquivo,
-garantindo compatibilidade após o clone do repositório.
+Por exemplo:
+
+```text
+Antena 3 ---- 0.8 km ---- Antena 5
+   |
+ 1.6 km
+   |
+Antena 2 ---- 1.0 km ---- Antena 6
+```
+
+Mesmo que existam vários caminhos possíveis entre duas antenas, o Dijkstra procura aquele cuja soma das distâncias seja a menor.
+
+## Exemplo
+
+O programa utiliza uma antena como ponto de origem e permite escolher uma antena de destino.
+
+Depois disso, é possível digitar uma mensagem.
+
+Um exemplo de saída seria:
+
+```text
+Voce é a antena 3
+
+Escolha a antena de destino: 8
+Digite a mensagem: Ola
+
+Enviando mensagem pela menor rota:
+3 - 5 - 6 - 8
+
+Mensagem enviada: Ola
+```
+
+A sequência apresentada representa o menor caminho encontrado pelo algoritmo.
+
+## Arquivo de antenas
+
+As conexões da rede são lidas a partir de um arquivo de texto.
+
+Cada linha representa uma conexão entre duas antenas e a distância entre elas.
+
+Exemplo:
+
+```text
+3 5 0.8
+2 6 1.0
+6 7 1.8
+```
+
+De forma geral:
+
+```text
+antena1 antena2 distancia
+```
+
+Esses dados são utilizados para montar o grafo que será analisado pelo algoritmo.
+
+## Objetivo
+
+O projeto tem caráter didático e serve principalmente para facilitar a compreensão do algoritmo de Dijkstra.
+
+A ideia é mostrar como um problema de menor caminho pode ser relacionado a uma situação mais fácil de visualizar, neste caso, o envio de mensagens entre antenas de uma rede fictícia.
